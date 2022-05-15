@@ -1,0 +1,71 @@
+.notes-list__button {
+  /* Reset button styles */
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: inherit;
+  font: inherit;
+
+  border-radius: 4px;
+
+  box-shadow: inset 0 -2px rgba(0, 0, 0, 0.1);
+
+  cursor: pointer;
+}
+
+.notes-list__button mark {
+  background-color: #333;
+  color: white;
+}
+
+.notes-list__note {
+  --note-background: white;
+  display: block;
+  padding: 6px 12px;
+  background: var(--note-background);
+  border-radius: 4px;
+}
+
+.notes-list__note:hover {
+  --note-background: #ffe866;
+}
+
+.notes-list__note_active,
+.notes-list__note:active {
+  --note-background: #ffdb01;
+}
+
+.notes-list__note-meta {
+  display: block;
+  font-size: 12px;
+  background: #ffdb01;
+  width: fit-content;
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.notes-list__note-header {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.notes-list__note-header_overflowing {
+  position: relative;
+}
+
+.notes-list__note-header_overflowing::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to right, transparent, var(--note-background));
+  z-index: 1;
+}
+
+:is(.notes-list__note:hover, .notes-list__note_active) .notes-list__note-meta {
+  background: #424242;
+  color: white;
+}

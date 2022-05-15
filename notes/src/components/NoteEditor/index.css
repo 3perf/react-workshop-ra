@@ -1,0 +1,9 @@
+.note-editor .CodeMirror {
+  padding: 0 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+.note-editor .CodeMirror-lines {
+  padding: 18.5px 0;
+}

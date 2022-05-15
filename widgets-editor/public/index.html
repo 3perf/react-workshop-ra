@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="shortcut icon"
+    href="https://res.cloudinary.com/dwpfockn8/image/upload/v1597920848/favicons/favicon-orange_pxfmdc.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Page</title>
+  <style>
+    #loader {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 4px;
+      background: #D36500;
+      transition: all ease-in 0.3s;
+    }
+  </style>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=%REACT_APP_GOOGLE_ANALYTICS_ID%"></script>
+  <script>
+    // GA SETUP
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', "%REACT_APP_GOOGLE_ANALYTICS_ID%");
+  </script>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="loader" style="width: 30vw;"></div>
+  <div id="header-root"></div>
+  <div id="root"></div>
+  <script>
+    // Add a soft redirect for workshop purposes.
+    // This is the only page that’s mocked to work without a server.
+    if (window.location.pathname !== '/applications/6133780827f57a3fce2d1e45/pages/6133780827f57a3fce2d1e47/edit') {
+      window.location.pathname = '/applications/6133780827f57a3fce2d1e45/pages/6133780827f57a3fce2d1e47/edit';
+    }
+  </script>
+  <script type="text/javascript">
+    // Note: The following handler is necessary for when we have a new deployment.
+
+    // What happens?
+    // The chunk hashes change, resulting in the server not able to find
+    // the previous chunks which the client will keep requesting, until the "new" index.html
+    // is loaded. This new index.html is loaded on page reload.
+
+    // Current solution:
+    // 1. Make sure it is indeed Appsmith's chunk which failed to fetch (regex match)
+    // 2. Reload once, and don't reload again.
+    // Pitfalls:
+    // 1. First reload will not fetch the new index.html, if the server isn't yet ready to serve it.
+    //    this can happen when the server is still deploying.
+
+    // TODO(abhinav): A comprehensive solution is involve the user when repeated
+    // reloads are necessary.
+    // 1. Delay reloads in increasing durations
+    // 2. Allow the user to pre-emptively reload or cancel reloads altogether.
+    window.onerror = function(message, url) {
+      const regex = /\/static\/js\/(\w.+).js$/;
+      const chunkLoadErrorMessage = "Unexpected token '<'"
+      if(regex.test(url) && url.indexOf(window.location.host) > -1 && message.includes(chunkLoadErrorMessage)) {
+        console.log("chunk load failed!", url);
+        // First check if we've set the flag to not reload on chunk load fail
+        const donotReload = window.localStorage.getItem("donotReloadOnChunkLoadFail");
+          if(!donotReload){
+            // If donotReload is set to false or undefined, we can set it to true and reload
+            // This signifies that this is the first time this happened in this session.
+            window.localStorage.setItem("donotReloadOnChunkLoadFail", true);
+            window.location.assign(window.location.href);
+          }
+      }
+    };
+    window.addEventListener("DOMContentLoaded", (event) => {
+      document.getElementById("loader").style.width = "50vw";
+    });
+    window.addEventListener("load", (event) => {
+      // This signifies that we've had a chunk load failure in this session
+      // We clear the entry, as otherwise, we will have a repeated reload scenario.
+      window.localStorage.removeItem("donotReloadOnChunkLoadFail");
+
+      document.getElementById("loader").style.width = "100vw";
+      setTimeout(() => {
+        document.getElementById("loader").style.opacity = 0;
+      });
+    });
+  </script>
+  <script type="text/javascript">
+    // '' (empty strings), 'false' are falsy
+    // could return either boolean or string based on value
+    const parseConfig = (config) => {
+      if (config.indexOf("__") === 0 || config.indexOf("$") === 0)
+        return "";
+
+      const result = config.trim();
+      if (result.toLowerCase() === "false" || result === "") {
+        return false;
+      } else if (result.toLowerCase() === "true") {
+        return true;
+      }
+
+      return result;
+    }
+    const LOG_LEVELS = ["debug", "error"];
+    const CONFIG_LOG_LEVEL_INDEX = LOG_LEVELS.indexOf(parseConfig("__APPSMITH_CLIENT_LOG_LEVEL__"));
+
+    const APP_ID = parseConfig("__APPSMITH_INTERCOM_APP_ID__");
+    const CLOUD_HOSTING = parseConfig("__APPSMITH_CLOUD_HOSTING__");
+    const DISABLE_TELEMETRY = parseConfig("__APPSMITH_DISABLE_TELEMETRY__");
+
+    // Initialize the Intercom library
+    if (APP_ID.length && APP_ID[0] !== "%" && CLOUD_HOSTING) {
+      (function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/' + APP_ID; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (document.readyState === 'complete') { l(); } else if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })();
+    }
+
+    window.SENTRY_CONFIG = parseConfig("__APPSMITH_SENTRY_DSN__");
+    window.APPSMITH_FEATURE_CONFIGS = {
+      sentry: {
+        dsn: parseConfig("__APPSMITH_SENTRY_DSN__"),
+        release: parseConfig("__APPSMITH_SENTRY_RELEASE__"),
+        environment: parseConfig("__APPSMITH_SENTRY_ENVIRONMENT__"),
+      },
+      smartLook: {
+        id: parseConfig("__APPSMITH_SMART_LOOK_ID__"),
+      },
+      enableGoogleOAuth: parseConfig("__APPSMITH_OAUTH2_GOOGLE_CLIENT_ID__"),
+      enableGithubOAuth: parseConfig("__APPSMITH_OAUTH2_GITHUB_CLIENT_ID__"),
+      enableRapidAPI: parseConfig("__APPSMITH_MARKETPLACE_ENABLED__"),
+      segment: {
+        apiKey: parseConfig("__APPSMITH_SEGMENT_KEY__"),
+        ceKey: parseConfig("__APPSMITH_SEGMENT_CE_KEY__"),
+      },
+      fusioncharts: {
+        licenseKey: parseConfig("__APPSMITH_FUSIONCHARTS_LICENSE_KEY__")
+      },
+      optimizely: parseConfig("__APPSMITH_OPTIMIZELY_KEY__"),
+      enableMixpanel: parseConfig("__APPSMITH_SEGMENT_KEY__"),
+      algolia: {
+        apiId: parseConfig("__APPSMITH_ALGOLIA_API_ID__"),
+        apiKey: parseConfig("__APPSMITH_ALGOLIA_API_KEY__"),
+        indexName: parseConfig("__APPSMITH_ALGOLIA_SEARCH_INDEX_NAME__"),
+      },
+      logLevel: CONFIG_LOG_LEVEL_INDEX > -1 ? LOG_LEVELS[CONFIG_LOG_LEVEL_INDEX] : LOG_LEVELS[1],
+      google: parseConfig("__APPSMITH_GOOGLE_MAPS_API_KEY__"),
+      cloudHosting: CLOUD_HOSTING,
+      enableTNCPP: parseConfig("__APPSMITH_TNC_PP__"),
+      appVersion: {
+        id: parseConfig("__APPSMITH_VERSION_ID__"),
+        releaseDate: parseConfig("__APPSMITH_VERSION_RELEASE_DATE__")
+      },
+      intercomAppID: APP_ID,
+      mailEnabled: parseConfig("__APPSMITH_MAIL_ENABLED__"),
+      disableTelemetry: DISABLE_TELEMETRY === "" || DISABLE_TELEMETRY,
+    };
+
+  </script>
+</body>
+
+</html>

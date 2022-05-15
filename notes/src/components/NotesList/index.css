@@ -1,0 +1,36 @@
+.notes-list {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+
+.notes-list__input {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.notes-list__notes {
+  flex: 1 0 0;
+  overflow: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notes-list__controls {
+  flex: none;
+
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  font-size: 9px;
+}
+
+.notes-list__control {
+  font-size: 9px !important;
+}

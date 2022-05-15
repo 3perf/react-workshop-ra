@@ -1,0 +1,38 @@
+{
+  "name": "react-workshop-notes-app",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "yarn@3.2.1",
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.4",
+    "@reduxjs/toolkit": "^1.9.1",
+    "codemirror": "^5.65.11",
+    "date-fns": "^2.29.3",
+    "jabber": "^1.5.2",
+    "lodash": "^4.17.21",
+    "marked": "^5.1.0",
+    "mobx": "^6.7.0",
+    "mobx-react-lite": "^3.4.0",
+    "nanoid": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^8.0.4",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0",
+    "remark-gfm": "^3.0.1",
+    "text-readability": "^1.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^3.0.1",
+    "@welldone-software/why-did-you-render": "^7.0.1",
+    "vite": "^4.0.4"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  }
+}

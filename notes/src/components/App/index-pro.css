@@ -1,0 +1,53 @@
+.notes-list-pro-mode .notes__column_list {
+  background: #212121;
+  color: white;
+}
+
+.notes-list-pro-mode .MuiInputBase-root {
+  color: white;
+}
+
+.notes-list-pro-mode .MuiInputBase-root::before {
+  border-bottom-color: rgba(255, 255, 255, 0.42) !important;
+}
+
+.notes-list-pro-mode .MuiInputBase-root::after {
+  border-bottom-color: white !important;
+}
+
+.notes-list-pro-mode .MuiButtonBase-root {
+  background: white;
+}
+
+.notes-list-pro-mode .MuiButtonBase-root:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.notes-list-pro-mode .notes__column_list h1::after {
+  content: " Pro";
+  font-weight: normal;
+}
+
+.notes-list-pro-mode .notes-list__note {
+  font-size: small;
+  --note-background: #424242;
+  color: white;
+}
+
+.notes-list-pro-mode .notes-list__note:hover {
+  --note-background: #757575;
+}
+
+.notes-list-pro-mode .notes-list__note_active,
+.notes-list-pro-mode .notes-list__note:active {
+  --note-background: #757575;
+}
+
+.notes-list-pro-mode .notes-list__note-meta {
+  background: #212121;
+}
+
+.notes-list-pro-mode .notes-list__note_active .notes-list__note-meta {
+  background: #ffdb01;
+  color: black;
+}

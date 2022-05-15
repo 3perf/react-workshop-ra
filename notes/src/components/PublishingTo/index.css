@@ -1,0 +1,10 @@
+.publishing-to__button {
+  all: unset;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.publishing-to__button:hover,
+.publishing-to__button:active {
+  color: #ccc;
+}

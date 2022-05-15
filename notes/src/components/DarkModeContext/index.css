@@ -1,0 +1,34 @@
+/* Poor man’s dark theme */
+body.theme-dark {
+  filter: invert();
+}
+
+/* Adjust images so the app looks properly */
+.theme-dark img {
+  filter: invert();
+}
+
+/* Double-invert some colors so they look properly */
+.theme-dark .notes__column_list {
+  background: #e0e4ff;
+}
+
+.theme-dark .notes-list__note:hover {
+  background: #657cff;
+  color: white;
+}
+
+.theme-dark :is(.notes-list__note_active, .notes-list__note:active) {
+  background: #0024ff;
+  color: white;
+}
+
+.theme-dark .notes-list__note-meta {
+  background: #bbb;
+}
+
+.theme-dark
+  :is(.notes-list__note:hover, .notes-list__note_active)
+  .notes-list__note-meta {
+  background: #000;
+}

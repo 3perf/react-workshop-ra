@@ -1,0 +1,8 @@
+.theme-switcher {
+  display: flex;
+  align-items: center;
+}
+
+.theme-switcher__label {
+  margin-right: 4px;
+}

@@ -1,0 +1,127 @@
+import React, { useState } from "react";
+import { useDrag, DragPreviewImage } from "react-dnd";
+import blankImage from "assets/images/blank.png";
+import { WidgetCardProps } from "widgets/BaseWidget";
+import styled from "styled-components";
+import { WidgetIcons } from "icons/WidgetIcons";
+import {
+  useWidgetDragResize,
+  useShowPropertyPane,
+  useWidgetSelection,
+} from "utils/hooks/dragResizeHooks";
+import AnalyticsUtil from "utils/AnalyticsUtil";
+import { generateReactKey } from "utils/generators";
+import { Colors } from "constants/Colors";
+import { AppState } from "reducers";
+import { useSelector } from "react-redux";
+
+type CardProps = {
+  details: WidgetCardProps;
+};
+
+export const Wrapper = styled.div`
+  padding: 10px 5px 10px 5px;
+  border-radius: 0px;
+  border: none;
+  color: ${Colors.ALTO};
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &:hover {
+    color: ${Colors.WHITE};
+    background: ${Colors.TUNDORA};
+    cursor: grab;
+    color: ${Colors.WHITE};
+    svg {
+      path {
+        fill: ${Colors.WHITE};
+      }
+      rect {
+        stroke: ${Colors.WHITE};
+      }
+    }
+  }
+  & i {
+    font-family: ${(props) => props.theme.fonts.text};
+    font-size: ${(props) => props.theme.fontSizes[7]}px;
+  }
+`;
+
+export const IconLabel = styled.h5`
+  text-align: center;
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: ${(props) => props.theme.fontWeights[1]};
+  flex-shrink: 1;
+  font-size: ${(props) => props.theme.fontSizes[1]}px;
+  line-height: ${(props) => props.theme.lineHeights[2]}px;
+  &::selection {
+    background: none;
+  }
+`;
+
+const WidgetCard = (props: CardProps) => {
+  const { setIsDragging } = useWidgetDragResize();
+  const { selectWidget } = useWidgetSelection();
+
+  const selectedWidget = useSelector(
+    (state: AppState) => state.ui.widgetDragResize.selectedWidget,
+  );
+
+  // Generate a new widgetId which can be used in the future for this widget.
+  const [widgetId, setWidgetId] = useState(generateReactKey());
+  const showPropertyPane = useShowPropertyPane();
+  const [, drag, preview] = useDrag({
+    ...props.details,
+    item: () => {
+      AnalyticsUtil.logEvent("WIDGET_CARD_DRAG", {
+        widgetType: props.details.type,
+        widgetName: props.details.widgetCardName,
+      });
+      showPropertyPane && showPropertyPane(undefined);
+      setIsDragging && setIsDragging(true);
+
+      // Make sure that this widget is selected
+      selectWidget && selectedWidget !== widgetId && selectWidget(widgetId);
+
+      return { ...props.details, widgetId };
+    },
+    end: (widget, monitor) => {
+      AnalyticsUtil.logEvent("WIDGET_CARD_DROP", {
+        widgetType: props.details.type,
+        widgetName: props.details.widgetCardName,
+        didDrop: monitor.didDrop(),
+      });
+      // We've finished dragging, generate a new widgetId to be used for next drag.
+      setWidgetId(generateReactKey());
+      setIsDragging && setIsDragging(false);
+    },
+  });
+
+  const iconType: string = props.details.type;
+  const Icon = WidgetIcons[iconType];
+  const className = `t--widget-card-draggable-${props.details.type
+    .split("_")
+    .join("")
+    .toLowerCase()}`;
+  return (
+    <React.Fragment>
+      <DragPreviewImage connect={preview} src={blankImage} />
+      <Wrapper ref={drag} className={className}>
+        <div>
+          <Icon />
+          <IconLabel>{props.details.widgetCardName}</IconLabel>
+        </div>
+      </Wrapper>
+    </React.Fragment>
+  );
+};
+
+export default WidgetCard;

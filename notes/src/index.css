@@ -1,0 +1,39 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* Poor man’s dark theme */
+.theme-dark {
+  filter: invert();
+}
+
+.react-17-warning {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px 12px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+  border-radius: 2px;
+  font-size: 14px;
+  background: rgba(200, 0, 0, 0.75);
+  color: white;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+}
